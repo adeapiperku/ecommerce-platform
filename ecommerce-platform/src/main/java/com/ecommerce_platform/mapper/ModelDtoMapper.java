@@ -33,12 +33,12 @@ public class ModelDtoMapper {
     }
 
     //Category to DTO basic
-    // public CategoryDto mapCategoryToDtoBasic(Category category){
-    //     CategoryDto categoryDto = new CategoryDto();
-    //     categoryDto.setId(category.getId());
-    //     categoryDto.setName(category.getName());
-    //     return categoryDto;
-    // }
+    public CategoryDto mapCategoryToDtoBasic(Category category){
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setId(category.getId());
+        categoryDto.setName(category.getName());
+        return categoryDto;
+    }
 
 
     //OrderItem to DTO Basics
@@ -53,15 +53,15 @@ public class ModelDtoMapper {
     }
 
     //Product to DTO Basic
-    // public ProductDto mapProductToDtoBasic(Product product){
-    //     ProductDto productDto = new ProductDto();
-    //     productDto.setId(product.getId());
-    //     productDto.setName(product.getName());
-    //     productDto.setDescription(product.getDescription());
-    //     productDto.setPrice(product.getPrice());
-    //     productDto.setImageUrl(product.getImageUrl());
-    //     return productDto;
-    // }
+    public ProductDto mapProductToDtoBasic(Product product){
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setPrice(product.getPrice());
+        productDto.setImageUrl(product.getImageUrl());
+        return productDto;
+    }
 
     public UserDto mapUserToDtoPlusAddress(User user){
 
@@ -79,8 +79,8 @@ public class ModelDtoMapper {
     public OrderItemDto mapOrderItemToDtoPlusProduct(OrderItem orderItem){
         OrderItemDto orderItemDto = mapOrderItemToDtoBasic(orderItem);
         if (orderItem.getProduct() != null) {
-            // ProductDto productDto = mapProductToDtoBasic(orderItem.getProduct());
-            // orderItemDto.setProduct(productDto);
+            ProductDto productDto = mapProductToDtoBasic(orderItem.getProduct());
+            orderItemDto.setProduct(productDto);
         }
         return orderItemDto;
     }
