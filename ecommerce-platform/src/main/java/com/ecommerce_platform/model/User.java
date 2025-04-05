@@ -38,6 +38,8 @@ public class User {
     @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
     private UserRole role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

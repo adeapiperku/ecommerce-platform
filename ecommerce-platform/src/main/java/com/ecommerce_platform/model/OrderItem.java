@@ -19,6 +19,9 @@ public class OrderItem {
 
     private int quantity;
     private BigDecimal price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private OrderStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)

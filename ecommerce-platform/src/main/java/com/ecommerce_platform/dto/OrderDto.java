@@ -8,19 +8,17 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItemDto {
+public class OrderDto {
 
     private Long id;
-    private int quantity;
-    private BigDecimal price;
-    private String  status;
-    private UserDto user;
-    private ProductDto product;
+    private BigDecimal totalPrice;
     private LocalDateTime createdAt;
+    private List<OrderItemDto> orderItemList;
 }

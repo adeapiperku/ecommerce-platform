@@ -7,20 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItemDto {
-
+public class ProductDto {
     private Long id;
-    private int quantity;
+    private String name;
+    private  String description;
     private BigDecimal price;
-    private String  status;
-    private UserDto user;
-    private ProductDto product;
-    private LocalDateTime createdAt;
+    private String imageUrl;
+    private CategoryDto category;
 }

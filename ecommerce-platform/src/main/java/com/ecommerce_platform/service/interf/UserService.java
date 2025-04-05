@@ -1,5 +1,7 @@
 package com.ecommerce_platform.service.interf;
 
+import java.util.Optional;
+
 // import com.ecommerce_platform.dto.LoginRequest;
 import com.ecommerce_platform.dto.Response;
 import com.ecommerce_platform.dto.UserDto;
@@ -11,4 +13,5 @@ public interface UserService {
     Response getAllUsers();
     User getLoginUser();
     Response getUserInfoAndOrderHistory();
+    Optional<User>findByEmail(String email);
 }
