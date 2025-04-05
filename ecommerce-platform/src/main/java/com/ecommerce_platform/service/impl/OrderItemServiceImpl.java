@@ -33,12 +33,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class OrderItemServiceImpl implements OrderItemService {
 
-    private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
-    private final ProductRepository productRepository;
-    private final UserService userService;
-    private final ModelDtoMapper modelDtoMapper;
 
+    private final OrderRepository orderRepo;
+    private final OrderItemRepository orderItemRepo;
+    private final ProductRepository productRepo;
+    private final UserService userService;
+    private final ModelDtoMapper entityDtoMapper;
 
     @Override
     public Response placeOrder(OrderRequest orderRequest) {
@@ -47,7 +47,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         //map order request items to order entities
 
         List<OrderItem> orderItems = orderRequest.getItems().stream().map(orderItemRequest -> {
-            Product product = productRepository.findById(orderItemRequest.getProductId())
+            Product product = productRepo.findById(orderItemRequest.getProductId())
                     .orElseThrow(()-> new NotFoundException("Product Not Found"));
 
             OrderItem orderItem = new OrderItem();
@@ -73,7 +73,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         //set the order reference in each orderitem
         orderItems.forEach(orderItem -> orderItem.setOrder(order));
 
-        orderRepository.save(order);
+        orderRepo.save(order);
 
         return Response.builder()
                 .status(200)
@@ -84,11 +84,11 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public Response updateOrderItemStatus(Long orderItemId, String status) {
-        OrderItem orderItem = orderItemRepository.findById(orderItemId)
+        OrderItem orderItem = orderItemRepo.findById(orderItemId)
                 .orElseThrow(()-> new NotFoundException("Order Item not found"));
 
         orderItem.setStatus(OrderStatus.valueOf(status.toUpperCase()));
-        orderItemRepository.save(orderItem);
+        orderItemRepo.save(orderItem);
         return Response.builder()
                 .status(200)
                 .message("Order status updated successfully")
@@ -101,13 +101,13 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .and(OrderItemSpecification.createdBetween(startDate, endDate))
                 .and(OrderItemSpecification.hasItemId(itemId));
 
-        Page<OrderItem> orderItemPage = orderItemRepository.findAll(spec, pageable);
+        Page<OrderItem> orderItemPage = orderItemRepo.findAll(spec, pageable);
 
         if (orderItemPage.isEmpty()){
             throw new NotFoundException("No Order Found");
         }
         List<OrderItemDto> orderItemDtos = orderItemPage.getContent().stream()
-                .map(modelDtoMapper::mapOrderItemToDtoPlusProductAndUser)
+                .map(entityDtoMapper::mapOrderItemToDtoPlusProductAndUser)
                 .collect(Collectors.toList());
 
         return Response.builder()
